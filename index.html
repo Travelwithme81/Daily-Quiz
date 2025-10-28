@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Facts MCQ Quiz</title>
+    <!-- Lora Font Link -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Mode Colors */
+            --primary-color: #2c3e50; /* Dark Blue */
+            --secondary-color: #3498db; /* Bright Blue */
+            --background-light: #f4f4f9;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --button-text-color: white;
+
+            /* Dark Mode Colors */
+            --dark-bg: #1e1e1e;
+            --dark-card: #2d2d2d;
+            --dark-text: #ecf0f1;
+            --dark-primary: #85aed8;
+            --dark-secondary: #5dade2; 
+        }
+
+        body {
+            font-family: 'Lora', serif; /* Lora Font Applied */
+            background-color: var(--background-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode header {
+            background: var(--dark-card);
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+        }
+        
+        body.dark-mode .card {
+            background: var(--dark-card);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode h2, body.dark-mode h3, body.dark-mode label, body.dark-mode #inventory-count {
+            color: var(--dark-primary);
+        }
+        
+        body.dark-mode #question-form button {
+            color: var(--dark-text);
+        }
+
+        body.dark-mode textarea, body.dark-mode input[type="text"], body.dark-mode select {
+            background-color: #3a3a3a;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        body.dark-mode button {
+            background-color: var(--dark-secondary);
+            color: var(--button-text-color);
+        }
+
+        body.dark-mode button:hover:not(:disabled) {
+            background-color: #79c5f0;
+        }
+
+        body.dark-mode .option-button {
+            background-color: #4a4a4a;
+            color: var(--dark-text);
+        }
+        
+        body.dark-mode .option-button.correct {
+            background-color: var(--success-color);
+        }
+
+        body.dark-mode .option-button.incorrect {
+            background-color: var(--error-color);
+        }
+
+        body.dark-mode #submission-message {
+            background-color: #1f3d2f; 
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 25px 20px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; 
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        main {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+            flex: 1;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 850px) {
+            main {
+                flex-direction: column;
+                padding: 15px;
+                gap: 20px;
+            }
+        }
+
+        /* Form & Input Styling */
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        body.dark-mode label {
+            color: var(--dark-primary);
+        }
+
+        textarea, input[type="text"], select {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus, input[type="text"]:focus, select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        /* Button Styling */
+        #mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            margin: 0;
+            border-radius: 50%;
+            background-color: transparent;
+            color: white;
+            font-size: 1.5rem;
+            line-height: 1;
+            box-shadow: none;
+            transition: color 0.3s;
+        }
+        
+        #mode-toggle:hover {
+            color: var(--secondary-color);
+            transform: none;
+            background-color: transparent;
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: var(--button-text-color);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        
+        button:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+        }
+        
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        #question-form button {
+            width: 100%;
+        }
+
+        /* Quiz Options Styling */
+        .options-grid {
+            display: grid;
+            /* 1 column for clearer option layout with only two options */
+            grid-template-columns: 1fr; 
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-button {
+            width: 100%;
+            padding: 18px;
+            text-align: left;
+            font-size: 1rem;
+            background-color: #ecf0f1; 
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-button.correct {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .option-button.incorrect {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        /* Message Styling */
+        .message {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        #submission-message {
+            background-color: #d1e7dd; 
+            color: #0f5132;
+            border: 1px solid var(--success-color);
+        }
+        
+        #inventory-count {
+            margin-top: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Historical Facts Quiz Generator 📜</h1>
+        <button id="mode-toggle" title="Toggle Dark Mode">🌙</button>
+    </header>
+
+    <main>
+        <!-- -------------------- QUESTION SUBMISSION SECTION (INVENTORY BUILDER) -------------------- -->
+        <section id="submission-section" class="card">
+            <h2>➕ Add a New Fact/Question (Locally Saved)</h2>
+            <form id="question-form">
+                <label for="question-text">Question/Fact:</label>
+                <textarea id="question-text" required placeholder="e.g., Who painted the Mona Lisa?"></textarea>
+
+                <label for="correct-answer">Correct Answer:</label>
+                <input type="text" id="correct-answer" required placeholder="e.g., Leonardo da Vinci">
+
+                <!-- Only one incorrect option as requested -->
+                <label for="incorrect-answer1">Incorrect Option:</label>
+                <input type="text" id="incorrect-answer1" required>
+
+                <button type="submit">💾 Save Question Permanently</button>
+            </form>
+            <p id="submission-message" class="message" style="display: none;"></p>
+        </section>
+
+        <!-- -------------------- QUIZ SECTION (PRACTICE) -------------------- -->
+        <section id="quiz-section" class="card">
+            <h2>🎯 Practice Quiz Setup</h2>
+            <p id="inventory-count">Questions in Inventory: Loading...</p>
+
+            <div id="quiz-setup">
+                <!-- New Question Limit Select -->
+                <label for="quiz-limit">Choose Question Count:</label>
+                <select id="quiz-limit">
+                    <option value="20">20 Questions</option>
+                    <option value="50">50 Questions</option>
+                    <option value="100" selected>100 Questions</option>
+                </select>
+
+                <label for="quiz-duration">Choose Time Limit:</label>
+                <select id="quiz-duration">
+                    <option value="900">15 Minutes</option> <!-- 15 * 60 = 900 seconds -->
+                    <option value="1800">30 Minutes</option> <!-- 30 * 60 = 1800 seconds -->
+                    <option value="3600">1 Hour</option>   <!-- 60 * 60 = 3600 seconds -->
+                </select>
+                <button id="start-quiz-button">Start Quiz</button>
+            </div>
+            
+            <div id="quiz-container" style="display: none;">
+                <!-- Quiz Status -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 1px solid #ccc; font-weight: bold; color: var(--primary-color);">
+                    <span id="timer-display">Time Left: --:--</span>
+                    <span id="question-counter">Question: 0/0</span> <!-- Initialized by JS -->
+                </div>
+
+                <h3 id="question-display" style="color: var(--primary-color);"></h3>
+                <div id="options-container" class="options-grid">
+                    <!-- MCQ options inserted here by JavaScript -->
+                </div>
+                <p id="feedback-message" class="message" style="display: none;"></p>
+                <button id="next-question-button" style="display: none; width: 100%;">Next Question</button>
+                <button id="end-quiz-button" style="display: none; width: 100%; margin-top: 10px; background-color: var(--error-color);">End Quiz Early</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Global Variables and Constants ---
+        let questions = [];
+        const LOCAL_STORAGE_KEY = 'historicalMCQInventory';
+        // QUESTION_LIMIT is now dynamic (currentQuizLimit)
+        let quizTimer = null;
+        let timeLeft = 0;
+        let questionsAnswered = 0;
+        let correctAnswers = 0;
+        let quizActive = false;
+        let currentQuizLimit = 0; // Dynamic limit based on user selection
+        
+        // Initial questions array updated to only use one incorrect answer
+        const initialQuestions = [
+            {
+                "question": "What year is generally accepted as the start of World War II?",
+                "correct": "1939",
+                "incorrect": ["1941"] 
+            },
+            {
+                "question": "Which ancient structure was finished first: the Colosseum or the Great Wall of China?",
+                "correct": "Great Wall of China",
+                "incorrect": ["Colosseum"]
+            },
+            {
+                "question": "Which scientist developed the theory of relativity?",
+                "correct": "Albert Einstein",
+                "incorrect": ["Isaac Newton"]
+            }
+        ];
+
+        let currentQuestion = null;
+        
+        // --- DOM Elements ---
+        const inventoryCountEl = document.getElementById('inventory-count');
+        const startButton = document.getElementById('start-quiz-button');
+        const nextButton = document.getElementById('next-question-button');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionDisplay = document.getElementById('question-display');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const submissionMessage = document.getElementById('submission-message');
+        const questionForm = document.getElementById('question-form');
+        const quizSetupEl = document.getElementById('quiz-setup');
+        const quizLimitSelect = document.getElementById('quiz-limit'); // New Limit Select
+        const durationSelect = document.getElementById('quiz-duration');
+        const timerDisplay = document.getElementById('timer-display');
+        const questionCounter = document.getElementById('question-counter');
+        const endQuizButton = document.getElementById('end-quiz-button');
+        const modeToggle = document.getElementById('mode-toggle');
+
+
+        // --- Persistence Functions ---
+
+        /** Saves the current 'questions' array to localStorage. */
+        function saveQuestionsToLocal() {
+            try {
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(questions));
+            } catch (e) {
+                console.error("Error saving to localStorage:", e);
+                submissionMessage.textContent = 'Error: Cannot save data permanently. Your browser might block local storage.';
+                submissionMessage.style.backgroundColor = '#f8d7da';
+                submissionMessage.style.color = 'var(--error-color)';
+                submissionMessage.style.display = 'block';
+            }
+        }
+
+        /** Loads questions from localStorage or initializes with default questions. */
+        function loadQuestionsFromLocal() {
+            try {
+                const storedQuestions = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (storedQuestions) {
+                    questions = JSON.parse(storedQuestions);
+                } else {
+                    // Initialize with default questions if nothing is saved yet
+                    questions = initialQuestions;
+                    saveQuestionsToLocal(); // Save defaults immediately
+                }
+            } catch (e) {
+                console.error("Error loading from localStorage:", e);
+                questions = initialQuestions;
+            }
+            updateInventoryCount();
+        }
+
+
+        // --- Utility Functions ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function updateInventoryCount() {
+            inventoryCountEl.textContent = `Questions in Inventory: ${questions.length}`;
+        }
+
+        // --- Timer and Quiz Management ---
+
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = seconds % 60;
+            return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (quizTimer) clearInterval(quizTimer);
+            
+            // Set initial time from selected duration
+            timeLeft = parseInt(durationSelect.value, 10);
+            timerDisplay.textContent = `Time Left: ${formatTime(timeLeft)}`;
+
+            quizTimer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `Time Left: ${formatTime(timeLeft)}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    endQuiz("Time's up! You ran out of time.");
+                }
+            }, 1000);
+        }
+
+        function endQuiz(message) {
+            quizActive = false;
+            clearInterval(quizTimer);
+            nextButton.style.display = 'none';
+            endQuizButton.style.display = 'none';
+            quizSetupEl.style.display = 'block';
+            
+            // Revert options container to standard message box styling
+            optionsContainer.className = 'message';
+            
+            const percentage = questionsAnswered > 0 ? ((correctAnswers / questionsAnswered) * 100).toFixed(1) : 0;
+            
+            // Display results, using currentQuizLimit
+            questionDisplay.textContent = `Quiz Finished! ${message}`;
+            optionsContainer.innerHTML = `
+                <p>You answered <strong>${questionsAnswered}</strong> out of ${currentQuizLimit} questions.</p>
+                <p>Correct Answers: <strong>${correctAnswers}</strong></p>
+                <p>Final Score: <strong>${percentage}%</strong></p>
+                <p>Click 'Start Quiz' to try again!</p>
+            `;
+            
+            // Reset question counter display
+            questionCounter.textContent = `Question: 0/${currentQuizLimit}`; 
+        }
+
+        // --- Quiz Logic ---
+        function displayRandomQuestion() {
+            if (!quizActive) return; 
+
+            if (questionsAnswered >= currentQuizLimit) { // Use currentQuizLimit
+                endQuiz("Congratulations! You completed all questions.");
+                return;
+            }
+
+            // 1. Reset state
+            optionsContainer.innerHTML = '';
+            nextButton.style.display = 'none';
+            feedbackMessage.style.display = 'none';
+            quizContainer.style.display = 'block';
+            
+            questionsAnswered++;
+            questionCounter.textContent = `Question: ${questionsAnswered}/${currentQuizLimit}`; // Use currentQuizLimit
+
+            // 2. Pick a random question
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            currentQuestion = questions[randomIndex];
+
+            // 3. Prepare and shuffle the options (correct + only one incorrect)
+            const options = [
+                currentQuestion.correct,
+                ...currentQuestion.incorrect
+            ];
+            shuffleArray(options);
+            
+            // Revert options container to grid styling
+            optionsContainer.className = 'options-grid';
+
+            // 4. Update the HTML
+            questionDisplay.textContent = currentQuestion.question;
+
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(button, option));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedButton, selectedAnswer) {
+            const allButtons = document.querySelectorAll('.option-button');
+
+            // Disable all buttons after an answer is selected
+            allButtons.forEach(btn => btn.disabled = true);
+            
+            feedbackMessage.style.display = 'block';
+
+            if (selectedAnswer === currentQuestion.correct) {
+                selectedButton.classList.add('correct');
+                feedbackMessage.textContent = "✅ Correct! Well done on your historical knowledge.";
+                feedbackMessage.style.backgroundColor = '#d1e7dd';
+                feedbackMessage.style.color = 'var(--success-color)';
+                correctAnswers++; 
+            } else {
+                selectedButton.classList.add('incorrect');
+                // Find and highlight the correct answer
+                allButtons.forEach(btn => {
+                    if (btn.textContent === currentQuestion.correct) {
+                        btn.classList.add('correct');
+                    }
+                });
+                feedbackMessage.textContent = `❌ Incorrect. The correct answer was: ${currentQuestion.correct}`;
+                feedbackMessage.style.backgroundColor = '#f8d7da';
+                feedbackMessage.style.color = 'var(--error-color)';
+            }
+            
+            endQuizButton.style.display = 'block';
+
+            // Check if limit is reached for the next question
+            if (questionsAnswered < currentQuizLimit) { // Use currentQuizLimit
+                nextButton.style.display = 'block';
+            } else {
+                // If this was the last question, automatically end the quiz
+                nextButton.style.display = 'none';
+                setTimeout(() => endQuiz("Quiz Completed!"), 1500); // Small delay to see feedback
+            }
+        }
+
+        // --- Dark Mode Toggle ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            modeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+            modeToggle.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+
+        // --- Event Listeners ---
+        
+        // Form Submission Handler (Updated for only one incorrect input)
+        questionForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const newQuestion = {
+                question: document.getElementById('question-text').value,
+                correct: document.getElementById('correct-answer').value,
+                incorrect: [
+                    document.getElementById('incorrect-answer1').value,
+                ]
+            };
+
+            // 1. Add to the array
+            questions.push(newQuestion);
+            
+            // 2. Save the updated array permanently
+            saveQuestionsToLocal();
+            
+            // 3. Update local display and show success message
+            updateInventoryCount();
+            submissionMessage.textContent = '✅ Question saved permanently to your browser!';
+            submissionMessage.style.backgroundColor = '#d1e7dd';
+            submissionMessage.style.color = '#0f5132';
+            submissionMessage.style.display = 'block';
+            
+            questionForm.reset();
+            
+            // Hide message after 4 seconds
+            setTimeout(() => {
+                submissionMessage.style.display = 'none';
+            }, 4000);
+        });
+
+        // Quiz Start Handler
+        startButton.addEventListener('click', () => {
+            currentQuizLimit = parseInt(quizLimitSelect.value, 10); // SET DYNAMIC LIMIT HERE
+
+            if (questions.length < currentQuizLimit) {
+                // Custom message box instead of alert()
+                inventoryCountEl.style.color = 'var(--error-color)';
+                inventoryCountEl.innerHTML = `<span style="background-color: #f8d7da; padding: 5px; border-radius: 4px; display: block; margin-top: 10px; color: var(--error-color);">
+                    <strong style="font-size: 1.1em;">Inventory Too Small!</strong><br>You need at least ${currentQuizLimit} questions to start this quiz. You currently have ${questions.length}.
+                </span>`;
+                // Reset message after a delay
+                setTimeout(() => {
+                    loadQuestionsFromLocal(); 
+                }, 7000);
+                return;
+            }
+            quizActive = true;
+            quizSetupEl.style.display = 'none';
+            
+            // Set initial counter display
+            questionCounter.textContent = `Question: 0/${currentQuizLimit}`;
+
+            // Reset stats for new quiz
+            questionsAnswered = 0;
+            correctAnswers = 0;
+            startTimer();
+            displayRandomQuestion();
+        });
+
+        // Quiz Control Buttons
+        nextButton.addEventListener('click', displayRandomQuestion);
+        endQuizButton.addEventListener('click', () => endQuiz("Quiz terminated early by user."));
+        modeToggle.addEventListener('click', toggleDarkMode);
+
+        // --- Initialization ---
+        function initializeApp() {
+            loadQuestionsFromLocal(); // Load data when the page starts
+            
+            // Apply saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                modeToggle.textContent = '☀️';
+                modeToggle.title = 'Switch to Light Mode';
+            } else {
+                modeToggle.textContent = '🌙';
+                modeToggle.title = 'Switch to Dark Mode';
+            }
+            
+            // Hide next button initially
+            nextButton.style.display = 'none';
+            
+            // Set initial question counter based on default selection (100)
+            const initialLimit = parseInt(quizLimitSelect.value, 10);
+            questionCounter.textContent = `Question: 0/${initialLimit}`;
+        }
+
+        initializeApp();
+    </script>
+</body>
+</html>
