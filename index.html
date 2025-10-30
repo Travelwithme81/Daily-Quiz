@@ -27,7 +27,7 @@
         }
 
         body {
-            font-family: 'Lora', serif; /* Lora Font Applied */
+            font-family: 'Lora', serif; /* Lora Font Applied to everything else */
             background-color: var(--background-light);
             color: var(--text-color);
             line-height: 1.6;
@@ -148,6 +148,8 @@
         }
 
         textarea, input[type="text"], select {
+            /* Input fields now use a system font (Arial/Sans-serif) for typing clarity */
+            font-family: Arial, sans-serif; 
             display: block;
             width: 100%;
             box-sizing: border-box;
@@ -342,8 +344,9 @@
         let quizActive = false;
         let currentQuizLimit = 0; // Dynamic limit based on user selection
         
-        // Initial questions array updated to only use one incorrect answer
+        // Initial questions array updated with sample SSC CGL GS questions (Total 25)
         const initialQuestions = [
+            // Original Questions
             {
                 "question": "What year is generally accepted as the start of World War II?",
                 "correct": "1939",
@@ -358,6 +361,146 @@
                 "question": "Which scientist developed the theory of relativity?",
                 "correct": "Albert Einstein",
                 "incorrect": ["Isaac Newton"]
+            },
+            // Expanded Sample SSC CGL GS Questions (22 New Qs)
+            // --- Polity & Constitution ---
+            {
+                "question": "The 'Right to Constitutional Remedies' comes under which article of the Indian Constitution?",
+                "correct": "Article 32",
+                "incorrect": ["Article 19"]
+            },
+            {
+                "question": "The minimum age for a candidate to be elected as the President of India is?",
+                "correct": "35 years",
+                "incorrect": ["30 years"]
+            },
+            {
+                "question": "Which part of the Indian Constitution deals with Fundamental Duties?",
+                "correct": "Part IVA",
+                "incorrect": ["Part III"]
+            },
+            {
+                "question": "Who is the final interpreter of the Indian Constitution?",
+                "correct": "Supreme Court",
+                "incorrect": ["President"]
+            },
+            {
+                "question": "The term of office of the Comptroller and Auditor General (CAG) is?",
+                "correct": "6 years or 65 years of age, whichever is earlier",
+                "incorrect": "5 years or 62 years of age, whichever is earlier"
+            },
+            // --- History ---
+            {
+                "question": "Who started the 'Do or Die' movement slogan during the Quit India Movement?",
+                "correct": "Mahatma Gandhi",
+                "incorrect": ["Jawaharlal Nehru"]
+            },
+            {
+                "question": "What was the capital of the Magadha empire before Pataliputra?",
+                "correct": "Rajagriha",
+                "incorrect": ["Vaishali"]
+            },
+            {
+                "question": "The famous traveler Ibn Battuta belonged to which country?",
+                "correct": "Morocco",
+                "incorrect": ["Portugal"]
+            },
+            {
+                "question": "Permanent Settlement was introduced in which year?",
+                "correct": "1793",
+                "incorrect": ["1801"]
+            },
+            {
+                "question": "The Harappan site of Dholavira is located in which Indian state?",
+                "correct": "Gujarat",
+                "incorrect": ["Punjab"]
+            },
+            {
+                "question": "Who was known as the 'Frontier Gandhi'?",
+                "correct": "Khan Abdul Ghaffar Khan",
+                "incorrect": ["Maulana Abul Kalam Azad"]
+            },
+            {
+                "question": "The 'Battle of Plassey' was fought in which year?",
+                "correct": "1757",
+                "incorrect": ["1764"]
+            },
+            {
+                "question": "Who was the founder of the Mauryan Empire in ancient India?",
+                "correct": "Chandragupta Maurya",
+                "incorrect": ["Ashoka"]
+            },
+            // --- Geography ---
+            {
+                "question": "Which one of the following mountain ranges is home to the famous 'Dodabetta Peak'?",
+                "correct": "Nilgiri Hills",
+                "incorrect": ["Vindhya Range"]
+            },
+            {
+                "question": "The largest producer of coffee in India is?",
+                "correct": "Karnataka",
+                "incorrect": ["Kerala"]
+            },
+            {
+                "question": "Which is the longest river in the world?",
+                "correct": "Nile",
+                "incorrect": ["Amazon"]
+            },
+            {
+                "question": "Which latitude passes through the middle of India?",
+                "correct": "Tropic of Cancer",
+                "incorrect": ["Equator"]
+            },
+            {
+                "question": "The famous 'Loktak Lake' is situated in which state?",
+                "correct": "Manipur",
+                "incorrect": ["Assam"]
+            },
+            {
+                "question": "Which river is known as the 'Ganga of the South'?",
+                "correct": "Godavari",
+                "incorrect": ["Krishna"]
+            },
+            // --- Science and Misc ---
+            {
+                "question": "What is the primary chemical component of natural gas?",
+                "correct": "Methane",
+                "incorrect": ["Propane"]
+            },
+            {
+                "question": "The metal component of chlorophyll is?",
+                "correct": "Magnesium",
+                "incorrect": ["Calcium"]
+            },
+            {
+                "question": "Which acid is stored in car batteries?",
+                "correct": "Sulfuric acid",
+                "incorrect": ["Nitric acid"]
+            },
+            {
+                "question": "What is the SI unit of electric current?",
+                "correct": "Ampere",
+                "incorrect": ["Volt"]
+            },
+            {
+                "question": "What is the scientific name for Vitamin C?",
+                "correct": "Ascorbic acid",
+                "incorrect": ["Retinol"]
+            },
+            {
+                "question": "Which tax in India has been replaced by GST?",
+                "correct": "Value Added Tax (VAT)",
+                "incorrect": ["Income Tax"]
+            },
+            {
+                "question": "The term 'RBI' stands for Reserve Bank of India. When was it established?",
+                "correct": "1935",
+                "incorrect": ["1947"]
+            },
+            {
+                "question": "Which of the following diseases is caused by a virus?",
+                "correct": "Polio",
+                "incorrect": ["Typhoid"]
             }
         ];
 
@@ -498,6 +641,7 @@
             questionCounter.textContent = `Question: ${questionsAnswered}/${currentQuizLimit}`; // Use currentQuizLimit
 
             // 2. Pick a random question
+            // To ensure a truly random question from the entire available set (questions.length)
             const randomIndex = Math.floor(Math.random() * questions.length);
             currentQuestion = questions[randomIndex];
 
